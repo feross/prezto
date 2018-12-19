@@ -11,3 +11,131 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
+
+# Set PATH so it includes user's private bin, if it exists
+
+if [[ -d "$HOME/bin" ]]; then
+  PATH="$PATH:$HOME/bin"
+fi
+
+# Set Sublime Text as default editor if it exists, otherwise vim
+
+if [[ -f "$HOME/bin/subl" ]]; then
+  export EDITOR='vim'
+  export VISUAL='subl -w'
+else
+  export EDITOR='vim'
+  export VISUAL='vim'
+fi
+
+# general aliases
+
+alias gsl='git stash -u && git pull && git stash pop'
+alias uuu='cd ~ && git diff --exit-code && git pull && cd ~/.zprezto && git diff --exit-code && git pull'
+
+# 'npm config' location
+
+export NPM_CONFIG_GLOBALCONFIG="$HOME/.npmrc-global"
+
+# npm aliases
+
+alias b='npm run build'
+alias dep='npm run deploy'
+alias i='npm install'
+alias ii='rm -rf node_modules/ && npm install'
+alias o='npm outdated'
+alias oo='npm outdated --depth=50 --production'
+alias pack='npm pack --dry-run'
+alias run='npm run'
+alias st='npm start'
+alias t='npm test'
+alias u='npm update && npm outdated'
+alias w='npm run watch'
+
+# 'npm publish' aliases
+
+alias patch='preversion && npm version patch && postversion'
+alias minor='preversion && npm version minor && postversion'
+alias major='preversion && npm version major && postversion'
+alias preversion='git pull && git diff --exit-code && npm pack --dry-run --ignore-scripts && rm -rf node_modules/ && npm install && npm test'
+alias postversion='npm run --if-present update-authors && git diff --exit-code && npm run --if-present build && git diff --exit-code && git push && git push --tags && npm publish'
+
+# 'npm global binary' aliases
+
+alias dep-check='dependency-check . --no-dev --unused'
+alias v='cat package.json | json version'
+
+# Ubuntu (where /etc/hostname exists)
+
+if [[ -f "/etc/hostname" ]]; then
+  export CDPATH=".:$HOME:$HOME/www"
+
+  alias apache2='cd /etc/apache2/'
+  alias nginx='cd /etc/nginx/'
+  alias ss='sudo systemctl'
+  alias sss='sudo supervisorctl'
+  alias uu='sudo apt update && sudo apt upgrade && sudo apt autoremove'
+fi
+
+# macOS (where no /etc/hostname exists)
+
+if [[ ! -f "/etc/hostname" ]]; then
+  export CDPATH=".:$HOME:$HOME/code"
+  export HOMEBREW_NO_ANALYTICS=1
+
+  # Use brew-installed Python 3 user directory (for pipenv)
+  # Found with "python3 -m site --user-base" plus appending "bin"
+  if [[ -d "/Users/feross/Library/Python/3.7/bin" ]]; then
+    PATH="/Users/feross/Library/Python/3.7/bin:$PATH"
+  fi
+
+  # Use brew-installed Ruby
+  if [[ -d "/usr/local/opt/ruby/bin" ]]; then
+    PATH="/usr/local/opt/ruby/bin:$PATH"
+  fi
+
+  if [[ ! -f "$HOME/bin/subl" ]]; then
+    echo "warning: 'subl' is missing (install from https://www.sublimetext.com)"
+  fi
+
+  if [[ ! -f "/usr/local/bin/brew" ]]; then
+    echo "warning: 'brew' is missing (install from https://brew.sh)"
+  fi
+
+  if [[ ! -f "/usr/local/bin/github" ]]; then
+    echo "warning: 'github' is missing (install from https://desktop.github.com)"
+  fi
+
+  if [[ ! -f "/usr/local/bin/travis" ]]; then
+    echo "warning: 'travis' is missing (run 'gem install travis')"
+  fi
+
+  if [[ ! -f "/usr/local/bin/json" ]]; then
+    echo "warning: 'json' is missing (run 'npm install -g json')"
+  fi
+
+  if [[ ! -f "/usr/local/bin/dependency-check" ]]; then
+    echo "warning: 'dependency-check' is missing (run 'npm install -g dependency-check')"
+  fi
+
+  # init travis
+  if [[ -f "$HOME/.travis/travis.sh" ]]; then
+    source /Users/feross/.travis/travis.sh
+  else
+    echo "warning: '.travis/travis.sh' is missing (run 'travis')"
+  fi
+
+  alias c='code'
+  alias gh='github .'
+  alias mongoremote='ssh -L 27017:localhost:27017 -N feross@athena'
+  alias s='subl'
+  alias uu='sudo gem update --system && sudo gem update && brew update && brew bundle && brew bundle cleanup --force && brew upgrade && brew cleanup && cleanup'
+  alias cleanup='brew bundle cleanup --force && brew cleanup && rm -rf ~/.electron ~/.babel.json ~/.node-gyp "~/.standard-*-cache"'
+fi
+
+# Prevent stupid zsh suggestions. Only correct commands, not arguments.
+unsetopt CORRECTALL
+setopt CORRECT
+
+# Overwrite existing files with redirection (> and >>).
+setopt CLOBBER

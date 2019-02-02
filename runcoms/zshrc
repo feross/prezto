@@ -93,6 +93,9 @@ if [[ ! -f "/etc/hostname" ]]; then
   # Use brew-installed Ruby
   if [[ -d "/usr/local/opt/ruby/bin" ]]; then
     PATH="/usr/local/opt/ruby/bin:$PATH"
+    LDFLAGS="-L/usr/local/opt/ruby/lib"
+    CPPFLAGS="-I/usr/local/opt/ruby/include"
+    PKG_CONFIG_PATH="/usr/local/opt/ruby/lib/pkgconfig"
   fi
 
   if [[ ! -f "$HOME/bin/subl" ]]; then

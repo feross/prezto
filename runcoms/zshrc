@@ -75,7 +75,7 @@ if [[ -f "/etc/hostname" ]]; then
   alias ss='sudo systemctl'
   alias sss='sudo supervisorctl'
   alias uu='sudo apt update && sudo apt upgrade && cleanup'
-  alias cleanup='sudo apt autoremove && rm -rf ~/.npm ~/.node-gyp'
+  alias cleanup='sudo apt autoremove && rm -rf ~/.electron ~/.npm ~/.node-gyp'
 fi
 
 # macOS (where no /etc/hostname exists)

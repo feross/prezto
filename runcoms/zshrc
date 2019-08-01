@@ -133,7 +133,7 @@ if [[ ! -f "/etc/hostname" ]]; then
   alias gh='github .'
   alias mongoremote='ssh -L 27017:localhost:27017 -N feross@athena'
   alias s='subl'
-  alias uu='sudo echo Starting... && brew update && brew bundle && brew bundle cleanup --force && brew upgrade && sudo gem update --system && sudo gem update && cleanup'
+  alias uu='sudo echo Starting... && cd ~ && brew update && brew bundle && brew bundle cleanup --force && brew upgrade && sudo gem update --system && sudo gem update && cleanup && popd'
   alias cleanup='brew bundle cleanup --force && brew cleanup && rm -rf ~/.babel.json ~/.electron ~/.npm ~/.node-gyp "~/.standard-*-cache" "~/.standardx-*-cache"'
 fi
 

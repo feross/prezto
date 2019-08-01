@@ -31,7 +31,7 @@ fi
 # general aliases
 
 alias gsl='git stash -u && git pull && git stash pop'
-alias uuu='cd ~ && git diff --exit-code && git pull && cd ~/.zprezto && git diff --exit-code && git pull'
+alias uuu='cd ~ && git diff --exit-code && git diff --staged --exit-code && git pull && cd ~/.zprezto && git diff --exit-code && git diff --staged --exit-code && git pull && popd && popd'
 
 # 'npm config' location
 

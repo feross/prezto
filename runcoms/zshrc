@@ -68,7 +68,7 @@ alias v='cat package.json | json version'
 # Ubuntu (where /etc/hostname exists)
 
 if [[ -f "/etc/hostname" ]]; then
-  export CDPATH=".:$HOME:$HOME/www"
+  export CDPATH="$HOME/www"
 
   alias apache2='cd /etc/apache2/'
   alias nginx='cd /etc/nginx/'
@@ -81,7 +81,7 @@ fi
 # macOS (where no /etc/hostname exists)
 
 if [[ ! -f "/etc/hostname" ]]; then
-  export CDPATH=".:$HOME:$HOME/code"
+  export CDPATH="$HOME/code"
   export HOMEBREW_NO_ANALYTICS=1
 
   # Use brew-installed Python 3 user directory (for pipenv)
@@ -129,7 +129,7 @@ if [[ ! -f "/etc/hostname" ]]; then
     echo "warning: '.travis/travis.sh' is missing (run 'travis')"
   fi
 
-  alias c='code'
+  alias c='cd ~/code'
   alias gh='github .'
   alias mongoremote='ssh -L 27017:localhost:27017 -N feross@athena'
   alias s='subl'

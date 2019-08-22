@@ -39,6 +39,7 @@ export NPM_CONFIG_GLOBALCONFIG="$HOME/.npmrc-global"
 
 # npm aliases
 
+alias audit='rm -rf node_modules/ && npm install --package-lock=true && npm audit; rm -f package-lock.json'
 alias b='npm run build'
 alias dep='npm run deploy'
 alias i='npm install'

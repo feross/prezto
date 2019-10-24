@@ -33,15 +33,11 @@ fi
 alias gsl='git stash -u && git pull && git stash pop'
 alias uuu='cd ~ && git diff --exit-code && git diff --staged --exit-code && git pull && cd ~/.zprezto && git diff --exit-code && git diff --staged --exit-code && git pull && popd && popd'
 
-# 'npm config' location
-
-export NPM_CONFIG_GLOBALCONFIG="$HOME/.npmrc-global"
-
 # npm aliases
 
 alias audit='rm -rf node_modules/ && npm install --package-lock=true && npm audit; rm -f package-lock.json'
 alias b='npm run build'
-alias dep='npm run deploy'
+alias dep='git pull && git diff --exit-code && git diff --staged --exit-code && npm run deploy'
 alias i='npm install'
 alias ii='rm -rf node_modules/ && npm install'
 alias o='npm outdated'
@@ -65,6 +61,12 @@ alias postversion='git diff --exit-code && git diff --staged --exit-code && npm 
 
 alias dep-check='dependency-check . --no-dev --unused'
 alias v='cat package.json | json version'
+
+# Environment variables
+
+export NPM_CONFIG_GLOBALCONFIG="$HOME/.npmrc-global" # 'npm config' location
+export DISABLE_OPENCOLLECTIVE=1
+export OPEN_SOURCE_SUPPORTER=1
 
 # Ubuntu (where /etc/hostname exists)
 
@@ -115,12 +117,46 @@ if [[ ! -f "/etc/hostname" ]]; then
     echo "warning: 'travis' is missing (run 'gem install travis')"
   fi
 
-  if [[ ! -f "/usr/local/bin/json" ]]; then
-    echo "warning: 'json' is missing (run 'npm install -g json')"
+  # Global npm packages
+
+  if [[ ! -f "/usr/local/bin/browserify" ]]; then
+    echo "warning: 'browserify' is missing (run 'npm install -g browserify')"
   fi
 
   if [[ ! -f "/usr/local/bin/dependency-check" ]]; then
     echo "warning: 'dependency-check' is missing (run 'npm install -g dependency-check')"
+  fi
+
+  if [[ ! -f "/usr/local/bin/figlet" ]]; then
+    echo "warning: 'figlet' is missing (run 'npm install -g figlet-cli')"
+  fi
+
+  if [[ ! -f "/usr/local/bin/fixpack" ]]; then
+    echo "warning: 'fixpack' is missing (run 'npm install -g fixpack')"
+  fi
+
+  if [[ ! -f "/usr/local/bin/json" ]]; then
+    echo "warning: 'json' is missing (run 'npm install -g json')"
+  fi
+
+  if [[ ! -f "/usr/local/bin/minify" ]]; then
+    echo "warning: 'minify' is missing (run 'npm install -g babel-minify')"
+  fi
+
+  if [[ ! -f "/usr/local/bin/nodemon" ]]; then
+    echo "warning: 'nodemon' is missing (run 'npm install -g nodemon')"
+  fi
+
+  if [[ ! -f "/usr/local/bin/ncu" ]]; then
+    echo "warning: 'ncu' is missing (run 'npm install -g npm-check-updates')"
+  fi
+
+  if [[ ! -f "/usr/local/bin/standard" ]]; then
+    echo "warning: 'standard' is missing (run 'npm install -g standard')"
+  fi
+
+  if [[ ! -f "/usr/local/bin/ytdl" ]]; then
+    echo "warning: 'ytdl' is missing (run 'npm install -g ytdl')"
   fi
 
   # init travis

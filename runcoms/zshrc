@@ -170,8 +170,8 @@ if [[ ! -f "/etc/hostname" ]]; then
   alias gh='github .'
   alias mongoremote='ssh -L 27017:localhost:27017 -N feross@athena'
   alias s='subl'
-  alias uu='sudo echo Starting... && cd ~ && brew update && brew bundle && brew bundle cleanup --force && brew upgrade && sudo gem update --system && sudo gem update && cleanup && popd'
-  alias cleanup='brew bundle cleanup --force && brew cleanup && rm -rf ~/.babel.json ~/.electron ~/.npm ~/.node-gyp "~/.standard-*-cache" "~/.standardx-*-cache"'
+  alias uu='sudo echo Starting... && cd ~ && brew update && brew bundle --no-lock --file=~/.Brewfile && brew bundle cleanup --force --file=~/.Brewfile && brew upgrade && sudo gem update --system && sudo gem update && cleanup && popd'
+  alias cleanup='cd ~ && brew bundle cleanup --force --file=~/.Brewfile && brew cleanup && rm -rf ~/.babel.json ~/.electron ~/.npm ~/.node-gyp "~/.standard-*-cache" "~/.standardx-*-cache" && popd'
 fi
 
 # Prevent stupid zsh suggestions. Only correct commands, not arguments.

@@ -67,14 +67,11 @@ alias v='cat package.json | json version'
 export NPM_CONFIG_GLOBALCONFIG="$HOME/.npmrc-global" # 'npm config' location
 export DISABLE_OPENCOLLECTIVE=1
 export OPEN_SOURCE_SUPPORTER=1
+export NEXT_TELEMETRY_DISABLED=1
 
 # Ubuntu (where /etc/hostname exists)
 
 if [[ -f "/etc/hostname" ]]; then
-  export CDPATH="$HOME/www"
-
-  alias apache2='cd /etc/apache2/'
-  alias nginx='cd /etc/nginx/'
   alias ss='sudo systemctl'
   alias sss='sudo supervisorctl'
   alias uu='sudo apt update && sudo apt upgrade && cleanup'
@@ -84,7 +81,6 @@ fi
 # macOS (where no /etc/hostname exists)
 
 if [[ ! -f "/etc/hostname" ]]; then
-  export CDPATH="$HOME/code"
   export HOMEBREW_NO_ANALYTICS=1
 
   # Use brew-installed Python 3 user directory (for pipenv)
@@ -115,6 +111,17 @@ if [[ ! -f "/etc/hostname" ]]; then
 
   if [[ ! -f "/usr/local/bin/travis" ]]; then
     echo "warning: 'travis' is missing (run 'gem install travis')"
+  fi
+
+  # Used by brave-browser
+  if [[ ! -f "/usr/local/bin/ccache" ]]; then
+    echo "warning: 'ccache' is missing (run 'brew install ccache')"
+  fi
+
+  # Install symlinks for compilers that will automatically use ccache
+  # Used by brave-browser
+  if [[ -d "/usr/local/opt/ccache/libexec" ]]; then
+    PATH="/usr/local/opt/ccache/libexec:$PATH"
   fi
 
   # Global npm packages
@@ -166,12 +173,17 @@ if [[ ! -f "/etc/hostname" ]]; then
     echo "warning: '.travis/travis.sh' is missing (run 'travis')"
   fi
 
-  alias c='cd ~/code'
+  # init z
+#  if [[ -f "/usr/local/etc/profile.d/z.sh" ]]; then
+#    source /usr/local/etc/profile.d/z.sh
+#  else
+#    echo "warning: 'z' is missing (run 'brew install z')"
+#  fi
+
   alias gh='github .'
-  alias mongoremote='ssh -L 27017:localhost:27017 -N feross@athena'
   alias s='subl'
-  alias uu='sudo echo Starting... && cd ~ && brew update && brew bundle --no-lock --file=~/.Brewfile && brew bundle cleanup --force --file=~/.Brewfile && brew upgrade && sudo gem update --system && sudo gem update && cleanup && popd'
-  alias cleanup='cd ~ && brew bundle cleanup --force --file=~/.Brewfile && brew cleanup && rm -rf ~/.babel.json ~/.electron ~/.npm ~/.node-gyp "~/.standard-*-cache" "~/.standardx-*-cache" && popd'
+  alias uu='sudo echo Starting... && cd ~ && brew update && brew bundle --no-lock --file=~/.Brewfile && brew upgrade && sudo gem update --system && sudo gem update && cleanup'
+  alias cleanup='cd ~ && brew bundle cleanup --force --file=~/.Brewfile && brew cleanup && rm -rf ~/.babel.json ~/.electron ~/.npm ~/.node-gyp "~/.standard-*-cache" "~/.standardx-*-cache" ~/Library/Caches/electron ~/Library/Caches/Yarn ~/Library/Caches/BraveSoftware && popd'
 fi
 
 # Prevent stupid zsh suggestions. Only correct commands, not arguments.

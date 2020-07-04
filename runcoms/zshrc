@@ -39,7 +39,7 @@ alias audit='rm -rf node_modules/ && npm install --package-lock=true && npm audi
 alias b='npm run build'
 alias dep='git pull && git diff --exit-code && git diff --staged --exit-code && npm run deploy'
 alias i='npm install'
-alias ii='rm -rf node_modules/ && npm install'
+alias ii='rm -rf node_modules/ && rm -f package-lock.json && npm install'
 alias o='npm outdated'
 alias oo='npm outdated --depth=50 --production'
 alias pack='npm pack --dry-run'

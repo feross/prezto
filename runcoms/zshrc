@@ -54,8 +54,8 @@ alias w='npm run watch'
 alias patch='preversion && npm version patch && postversion'
 alias minor='preversion && npm version minor && postversion'
 alias major='preversion && npm version major && postversion'
-alias preversion='git pull && git diff --exit-code && git diff --staged --exit-code && npm pack --dry-run --ignore-scripts && rm -rf node_modules/ && npm install && npm test'
-alias postversion='git diff --exit-code && git diff --staged --exit-code && npm run --if-present update-authors && (git diff --exit-code || git commit -am "update authors") && npm run --if-present build && (git diff --exit-code || git commit -am "build") && git push --follow-tags && npm publish'
+alias preversion='git pull && git diff --exit-code && git diff --staged --exit-code && npm pack --dry-run --ignore-scripts && rm -rf node_modules/ && rm -f package-lock.json && npm install && npm test'
+alias postversion='git diff --exit-code && git diff --staged --exit-code && npm run --if-present update-authors && (git diff --exit-code || git commit -am "update authors") && npm run --if-present build && (git diff --exit-code || git commit -am "build") && ~/code/standard-package/cmd.js --fix && (git diff --exit-code || git commit -am "package metadata") && git push --follow-tags && npm publish'
 
 # 'npm global binary' aliases
 

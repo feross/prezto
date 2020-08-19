@@ -18,11 +18,11 @@ if [[ -d "$HOME/bin" ]]; then
   PATH="$PATH:$HOME/bin"
 fi
 
-# Set Sublime Text as default editor if it exists, otherwise vim
+# Set Visual Studio Code as default editor if it exists, otherwise vim
 
-if [[ -f "$HOME/bin/subl" ]]; then
+if [[ -f "$HOME/bin/code" ]]; then
   export EDITOR='vim'
-  export VISUAL='subl -w'
+  export VISUAL='code --wait --new-window'
 else
   export EDITOR='vim'
   export VISUAL='vim'
@@ -98,8 +98,8 @@ if [[ ! -f "/etc/hostname" ]]; then
     PKG_CONFIG_PATH="/usr/local/opt/ruby/lib/pkgconfig"
   fi
 
-  if [[ ! -f "$HOME/bin/subl" ]]; then
-    echo "warning: 'subl' is missing (install from https://www.sublimetext.com)"
+  if [[ ! -f "$HOME/bin/code" ]]; then
+    echo "warning: 'code' is missing (install from https://code.visualstudio.com)"
   fi
 
   if [[ ! -f "/usr/local/bin/brew" ]]; then
@@ -182,7 +182,7 @@ if [[ ! -f "/etc/hostname" ]]; then
 #  fi
 
   alias gh='github .'
-  alias s='subl'
+  alias s='code'
   alias uu='sudo echo Starting... && cd ~ && brew update && brew bundle --no-lock --file=~/.Brewfile && brew upgrade && sudo gem update --system && sudo gem update && cleanup'
   alias cleanup='cd ~ && brew bundle cleanup --force --file=~/.Brewfile && brew cleanup && rm -rf ~/.babel.json ~/.electron ~/.npm ~/.node-gyp "~/.standard-*-cache" "~/.standardx-*-cache" ~/Library/Caches/electron ~/Library/Caches/Yarn ~/Library/Caches/BraveSoftware && ccache --clear && popd'
 fi

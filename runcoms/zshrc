@@ -184,7 +184,7 @@ if [[ ! -f "/etc/hostname" ]]; then
   alias c='code'
   alias gh='github .'
   alias s='code'
-  alias uu='sudo echo Starting... && cd ~ && brew update && brew bundle --no-lock --file=~/.Brewfile && brew upgrade && sudo gem update --system && sudo gem update && cleanup'
+  alias uu='sudo echo Starting... && cd ~ && brew update && brew bundle --no-lock --file=~/.Brewfile && brew upgrade && brew upgrade --cask && sudo gem update --system && sudo gem update && cleanup'
   alias cleanup='cd ~ && brew bundle cleanup --force --file=~/.Brewfile && brew cleanup && rm -rf ~/.babel.json ~/.electron ~/.npm ~/.node-gyp "~/.standard-*-cache" "~/.standardx-*-cache" ~/Library/Caches/electron ~/Library/Caches/Yarn ~/Library/Caches/BraveSoftware && ccache --clear && popd'
 fi
 

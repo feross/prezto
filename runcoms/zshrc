@@ -31,6 +31,7 @@ fi
 # general aliases
 
 alias gsl='git stash -u && git pull && git stash pop'
+alias lll='ls -lha'
 alias uuu='cd ~ && git diff --exit-code && git diff --staged --exit-code && git pull && cd ~/.zprezto && git diff --exit-code && git diff --staged --exit-code && git pull && popd && popd'
 
 # npm aliases
@@ -44,7 +45,6 @@ alias o='npm outdated'
 alias oo='npm outdated --depth=50 --production'
 alias pack='npm pack --dry-run'
 alias run='npm run'
-alias sb='npm run storybook'
 alias st='npm start'
 alias t='npm test'
 alias u='npm update && npm outdated'
@@ -67,8 +67,18 @@ alias v='cat package.json | json version'
 
 export NPM_CONFIG_GLOBALCONFIG="$HOME/.npmrc-global" # 'npm config' location
 export DISABLE_OPENCOLLECTIVE=1
+export OPENCOLLECTIVE_HIDE=1
 export OPEN_SOURCE_SUPPORTER=1
 export NEXT_TELEMETRY_DISABLED=1
+
+# Prevent stupid zsh suggestions. Only correct commands, not arguments
+
+unsetopt CORRECTALL
+setopt CORRECT
+
+# Overwrite existing files with redirection (> and >>)
+
+setopt CLOBBER
 
 # Ubuntu (where /etc/hostname exists)
 
@@ -83,6 +93,18 @@ fi
 
 if [[ ! -f "/etc/hostname" ]]; then
   export HOMEBREW_NO_ANALYTICS=1
+
+  # Add homebrew to the PATH
+  PATH="/opt/homebrew/sbin:/opt/homebrew/bin:$PATH"
+
+  # Add Node.js 14 to the PATH
+  PATH="/opt/homebrew/opt/node@14/bin:$PATH"
+
+  alias c='code'
+  alias gh='github .'
+  alias s='code'
+  alias uu='sudo echo Starting... && cd ~ && brew update && brew bundle --no-lock --file=~/.Brewfile && brew upgrade && brew upgrade --cask && cleanup' # sudo gem update --system && sudo gem update
+  alias cleanup='cd ~ && brew bundle cleanup --force --file=~/.Brewfile && brew cleanup && rm -rf ~/.babel.json ~/.electron ~/.npm ~/.node-gyp "~/.standard-*-cache" "~/.standardx-*-cache" ~/Library/Caches/electron ~/Library/Caches/Yarn ~/Library/Caches/BraveSoftware && ccache --clear && popd'
 
   # Use brew-installed Python 3 user directory (for pipenv)
   # Found with "python3 -m site --user-base" plus appending "bin"
@@ -102,7 +124,7 @@ if [[ ! -f "/etc/hostname" ]]; then
     echo "warning: 'code' is missing (install from https://code.visualstudio.com)"
   fi
 
-  if [[ ! -f "/usr/local/bin/brew" ]]; then
+  if [[ ! -f "/opt/homebrew/bin/brew" ]]; then
     echo "warning: 'brew' is missing (install from https://brew.sh)"
   fi
 
@@ -110,87 +132,45 @@ if [[ ! -f "/etc/hostname" ]]; then
     echo "warning: 'github' is missing (install from https://desktop.github.com)"
   fi
 
-  if [[ ! -f "/usr/local/bin/travis" ]]; then
-    echo "warning: 'travis' is missing (run 'gem install travis')"
-  fi
-
-  # Used by brave-browser
-  if [[ ! -f "/usr/local/bin/ccache" ]]; then
-    echo "warning: 'ccache' is missing (run 'brew install ccache')"
-  fi
-
   # Install symlinks for compilers that will automatically use ccache
   # Used by brave-browser
-  if [[ -d "/usr/local/opt/ccache/libexec" ]]; then
-    PATH="/usr/local/opt/ccache/libexec:$PATH"
+  if [[ -f "/opt/homebrew/bin/ccache" && -d "/opt/homebrew/opt/ccache/libexec" ]]; then
+    PATH="/opt/homebrew/opt/ccache/libexec:$PATH"
+  else
+    echo "warning: 'ccache' is missing (run 'brew install ccache')"
   fi
 
   # Global npm packages
 
-  if [[ ! -f "/usr/local/bin/browserify" ]]; then
+  if [[ ! -f "/opt/homebrew/bin/browserify" ]]; then
     echo "warning: 'browserify' is missing (run 'npm install -g browserify')"
   fi
 
-  if [[ ! -f "/usr/local/bin/dependency-check" ]]; then
+  if [[ ! -f "/opt/homebrew/bin/dependency-check" ]]; then
     echo "warning: 'dependency-check' is missing (run 'npm install -g dependency-check')"
   fi
 
-  if [[ ! -f "/usr/local/bin/figlet" ]]; then
+  if [[ ! -f "/opt/homebrew/bin/figlet" ]]; then
     echo "warning: 'figlet' is missing (run 'npm install -g figlet-cli')"
   fi
 
-  if [[ ! -f "/usr/local/bin/fixpack" ]]; then
+  if [[ ! -f "/opt/homebrew/bin/fixpack" ]]; then
     echo "warning: 'fixpack' is missing (run 'npm install -g fixpack')"
   fi
 
-  if [[ ! -f "/usr/local/bin/json" ]]; then
+  if [[ ! -f "/opt/homebrew/bin/json" ]]; then
     echo "warning: 'json' is missing (run 'npm install -g json')"
   fi
 
-  if [[ ! -f "/usr/local/bin/minify" ]]; then
-    echo "warning: 'minify' is missing (run 'npm install -g babel-minify')"
-  fi
-
-  if [[ ! -f "/usr/local/bin/nodemon" ]]; then
+  if [[ ! -f "/opt/homebrew/bin/nodemon" ]]; then
     echo "warning: 'nodemon' is missing (run 'npm install -g nodemon')"
   fi
 
-  if [[ ! -f "/usr/local/bin/ncu" ]]; then
+  if [[ ! -f "/opt/homebrew/bin/ncu" ]]; then
     echo "warning: 'ncu' is missing (run 'npm install -g npm-check-updates')"
   fi
 
-  if [[ ! -f "/usr/local/bin/standard" ]]; then
+  if [[ ! -f "/opt/homebrew/bin/standard" ]]; then
     echo "warning: 'standard' is missing (run 'npm install -g standard')"
   fi
-
-  if [[ ! -f "/usr/local/bin/ytdl" ]]; then
-    echo "warning: 'ytdl' is missing (run 'npm install -g ytdl')"
-  fi
-
-  # init travis
-  if [[ -f "$HOME/.travis/travis.sh" ]]; then
-    source /Users/feross/.travis/travis.sh
-  else
-    echo "warning: '.travis/travis.sh' is missing (run 'travis')"
-  fi
-
-  # init z
-#  if [[ -f "/usr/local/etc/profile.d/z.sh" ]]; then
-#    source /usr/local/etc/profile.d/z.sh
-#  else
-#    echo "warning: 'z' is missing (run 'brew install z')"
-#  fi
-
-  alias c='code'
-  alias gh='github .'
-  alias s='code'
-  alias uu='sudo echo Starting... && cd ~ && brew update && brew bundle --no-lock --file=~/.Brewfile && brew upgrade && brew upgrade --cask && sudo gem update --system && sudo gem update && cleanup'
-  alias cleanup='cd ~ && brew bundle cleanup --force --file=~/.Brewfile && brew cleanup && rm -rf ~/.babel.json ~/.electron ~/.npm ~/.node-gyp "~/.standard-*-cache" "~/.standardx-*-cache" ~/Library/Caches/electron ~/Library/Caches/Yarn ~/Library/Caches/BraveSoftware && ccache --clear && popd'
 fi
-
-# Prevent stupid zsh suggestions. Only correct commands, not arguments.
-unsetopt CORRECTALL
-setopt CORRECT
-
-# Overwrite existing files with redirection (> and >>).
-setopt CLOBBER

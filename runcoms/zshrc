@@ -120,7 +120,7 @@ if [[ ! -f "/etc/hostname" ]]; then
     PKG_CONFIG_PATH="/usr/local/opt/ruby/lib/pkgconfig"
   fi
 
-  if [[ ! -f "/usr/local/bin/code" ]]; then
+  if [[ ! -f "/opt/homebrew/bin/code" ]]; then
     echo "warning: 'code' is missing (install from https://code.visualstudio.com)"
   fi
 

@@ -97,9 +97,6 @@ if [[ ! -f "/etc/hostname" ]]; then
   # Add homebrew to the PATH
   PATH="/opt/homebrew/sbin:/opt/homebrew/bin:$PATH"
 
-  # Add Node.js 14 to the PATH
-  PATH="/opt/homebrew/opt/node@14/bin:$PATH"
-
   alias c='code'
   alias gh='github .'
   alias s='code'

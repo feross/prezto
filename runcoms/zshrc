@@ -97,10 +97,15 @@ if [[ ! -f "/etc/hostname" ]]; then
   # Add homebrew to the PATH
   PATH="/opt/homebrew/sbin:/opt/homebrew/bin:$PATH"
 
+  # Load environment variables from ~/.env.local
+  if [[ -f "/Users/feross/.env.local" ]]; then
+    export $(cat /Users/feross/.env.local | xargs)
+  fi
+
   alias c='code'
-  alias gh='github .'
+  alias g='github .'
   alias s='code'
-  alias uu='sudo echo Starting... && cd ~ && brew update && brew bundle --no-lock --file=~/.Brewfile && brew upgrade && brew upgrade --cask && cleanup' # sudo gem update --system && sudo gem update
+  alias uu='cd ~ && brew update && brew bundle --no-lock --file=~/.Brewfile && brew upgrade && brew upgrade --cask && cleanup' # sudo gem update --system && sudo gem update
   alias cleanup='cd ~ && brew bundle cleanup --force --file=~/.Brewfile && brew cleanup && rm -rf ~/.babel.json ~/.electron ~/.npm ~/.node-gyp "~/.standard-*-cache" "~/.standardx-*-cache" ~/Library/Caches/electron ~/Library/Caches/Yarn ~/Library/Caches/BraveSoftware && ccache --clear && popd'
 
   # Use brew-installed Python 3 user directory (for pipenv)

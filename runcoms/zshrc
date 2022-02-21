@@ -97,6 +97,9 @@ if [[ ! -f "/etc/hostname" ]]; then
   # Add homebrew to the PATH
   PATH="/opt/homebrew/sbin:/opt/homebrew/bin:$PATH"
 
+  # Use Node 16 instead of latest
+  PATH="/opt/homebrew/opt/node@16/bin:$PATH"
+
   # Load environment variables from ~/.env.local
   if [[ -f "/Users/feross/.env.local" ]]; then
     export $(cat /Users/feross/.env.local | xargs)

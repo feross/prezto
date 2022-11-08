@@ -109,7 +109,7 @@ if [[ ! -f "/etc/hostname" ]]; then
   alias c='code'
   alias g='github .'
   alias s='code'
-  alias uu='cd ~ && brew update && brew bundle --no-lock --file=~/.Brewfile && brew upgrade && brew upgrade --cask && cleanup' # sudo gem update --system && sudo gem update
+  alias uu='cd ~ && brew update && brew bundle --no-lock --file=~/.Brewfile && brew upgrade && brew upgrade --cask && mas upgrade && cleanup' # sudo gem update --system && sudo gem update
   alias cleanup='cd ~ && brew bundle cleanup --force --file=~/.Brewfile && brew cleanup && rm -rf ~/.babel.json ~/.electron ~/.npm ~/.node-gyp "~/.standard-*-cache" "~/.standardx-*-cache" ~/Library/Caches/electron ~/Library/Caches/Yarn ~/Library/Caches/BraveSoftware && ccache --clear && popd'
 
   # Use brew-installed Python 3 user directory (for pipenv)

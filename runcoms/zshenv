@@ -9,3 +9,8 @@
 if [[ ( "$SHLVL" -eq 1 && ! -o LOGIN ) && -s "${ZDOTDIR:-$HOME}/.zprofile" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprofile"
 fi
+
+# Source private environment variables.
+if [[ -s "${ZDOTDIR:-$HOME}/.zshenv-private" ]]; then
+  source "${ZDOTDIR:-$HOME}/.zshenv-private"
+fi

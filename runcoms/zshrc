@@ -109,8 +109,8 @@ if [[ ! -f "/etc/hostname" ]]; then
   alias c='code'
   alias g='github .'
   alias s='code'
-  alias uu='cd ~ && brew update && brew bundle --no-lock --file=~/.Brewfile && brew upgrade && brew upgrade --cask && mas upgrade && cleanup' # sudo gem update --system && sudo gem update
-  alias cleanup='cd ~ && brew bundle cleanup --force --file=~/.Brewfile && brew cleanup && rm -rf ~/.babel.json ~/.electron ~/.npm ~/.node-gyp "~/.standard-*-cache" "~/.standardx-*-cache" ~/Library/Caches/electron ~/Library/Caches/Yarn ~/Library/Caches/BraveSoftware && ccache --clear && popd'
+  alias uu='cd ~ && brew update && brew bundle install --verbose --file=~/.Brewfile && brew upgrade --verbose && brew upgrade --cask && mas upgrade && cleanup' # sudo gem update --system && sudo gem update
+  alias cleanup='cd ~ && brew bundle cleanup --force --file=~/.Brewfile && brew cleanup && rm -rf ~/.babel.json ~/.electron ~/.npm ~/.node-gyp "~/.standard-*-cache" "~/.standardx-*-cache" ~/Library/Caches/electron ~/Library/Caches/Yarn ~/Library/Caches/BraveSoftware && (command -v ccache >/dev/null 2>&1 && ccache --clear || true) && (popd || true)'
 
   # Use brew-installed Python 3 user directory (for pipenv)
   # Found with "python3 -m site --user-base" plus appending "bin"

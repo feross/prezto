@@ -146,14 +146,6 @@ if [[ ! -f "/etc/hostname" ]]; then
     echo "warning: 'ccache' is missing (run 'brew install ccache')"
   fi
 
-  # Protect npm installs with Socket (https://socket.dev)
-  if [[ ! -f "/opt/homebrew/bin/socket" ]]; then
-    echo "warning: 'socket' is missing (run 'npm install -g @socketsecurity/cli')"
-  else
-    alias npm='socket npm'
-    alias npx='socket npx'
-  fi
-
   # Global npm packages
 
   if [[ ! -f "/opt/homebrew/bin/browserify" ]]; then
